@@ -1,3 +1,4 @@
 venv/
-__pycache__/
+blog/__pycache__/
+articles/__pycache__/
 db.sqlite3
