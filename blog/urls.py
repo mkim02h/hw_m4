@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from articles.views import hello_world, my_name, say_name, summation
+from articles.views import hello_world, my_name, say_name, summation, articles_list
+from catalog.views import catalogs_list
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +26,6 @@ urlpatterns = [
     path('name/', my_name),
     path('name/<str:name>/', say_name),
     path('sum/<int:a>/<int:b>/', summation),
+    path('', articles_list),
+    path('catalog/', catalogs_list),
 ]
