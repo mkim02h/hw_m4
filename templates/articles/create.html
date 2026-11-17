@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Новая статья{% endblock %}
+
+{% block content %}
+    <div class="mx-auto" style="max-width: 720px;">
+        <h1 class="h3 mb-4">Новая статья</h1>
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="title" class="form-label fw-semibold">Заголовок</label>
+                <input type="text" class="form-control" id="title" name="title"
+                       maxlength="255" value="{{ request.POST.title }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="text" class="form-label fw-semibold">Текст</label>
+                <textarea class="form-control" id="text" name="text" rows="10" required>{{ request.POST.text }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="rate" class="form-label fw-semibold">Рейтинг</label>
+                <input type="number" class="form-control" id="rate" name="rate"
+                       value="{{ request.POST.rate }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="category" class="form-label fw-semibold">Категория</label>
+                <select class="form-select" id="category" name="category">
+                    <option value="">Без категории</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}"
+                                {% if request.POST.category_id == category|stringformat:"s" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label fw-semibold">
+                    Картинка <span class="text-body-secondary fw-normal">(необязательно)</span>
+                </label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-1"></i>Опубликовать
+                </button>
+                <button type="button" class="btn btn-outline-secondary" onclick="history.back()">
+                    Отмена
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
